@@ -2,17 +2,17 @@ import Navlinks from "./navlinks";
 
 const Navbar = () => {
   return (
-    <div className="min-w-[20%] w-[20%] border-r-[1.9px] border-[#D9D9D9] bg-[white] h-[100vh] flex flex-col px-[21px] py-[20px] box-border font-Inter">
+    <div className="min-w-[280px] w-[280px] border-r-[1.9px] border-[#D9D9D9] bg-[white] h-[100vh] flex flex-col px-[21px] py-[20px] box-border font-Inter">
       <div className="flex flex-col gap-y-[0px] justify-center box-border">
-        <div className="flex flex-row gap-x-[5px] px-[30px] text-[26px] items-center font-medium font-Lexend mb-3">
+        <div className="flex flex-row gap-x-[5px] px-[10px] items-center mb-3">
           <img
             className="h-[22px]"
             src="/assets/images/verify.svg"
             alt="logo"
           />
-          <p>RetireWise.AI</p>
+          <p className="text-[22px] font-medium font-Lexend">RetireWise.AI</p>
         </div>
-        <div className="flex flex-row gap-x-[5px] px-[60px] text-[#57534E] mt-[-10px] text-[10px] justify-end">
+        <div className="flex items-center gap-x-[5px] px-[60px] text-[#57534E] mt-[-10px] text-[10px] justify-end">
           <div className="text-[13px]">built for</div>
           <img
             className="h-[22px]"

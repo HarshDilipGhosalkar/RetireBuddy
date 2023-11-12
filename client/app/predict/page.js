@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Pie } from '@/app/predict/pie';
 import { ProgressBar } from './progress';
+import Modal from './addItemModal';
 
 
 const predict = () => {
@@ -26,6 +27,17 @@ const predict = () => {
     '#EC87C0', '#5DB2FF', '#FFD700', '#9F9F9F', '#37BC9B',
     '#967ADC', '#FF7857', '#5E5E5E', '#DA4453', '#80D3E6',
   ];
+  
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
+  };
+  
+
+  const closeModal = () => {
+    setModalOpen(false);
+  };
 
   const handleUpdateCategory = (index, newVal) => {
     const newData = [...data];
@@ -35,6 +47,13 @@ const predict = () => {
     setData(newData);
   };
 
+  const handleAddCategory = (category, expence) => {
+    setCount(count+1);
+    setLabel([...label, category])
+    setData([...data, parseInt(expence)]);
+    setColorList([...colorList,pieChartColors[count]])
+    closeModal();
+  };
 
   useEffect(() => {
     console.log(data);
@@ -42,26 +61,26 @@ const predict = () => {
 
   return (
     <div className="p-[30px]">
-      <div className="  flex">
-        <div className="w-[40%] bg-[white] ">
+      <div className="  flex justify-between">
+        <div className="w-[55%] bg-[white] ">
           <div className="font-medium text-[18px]">Categories</div>
           <div className="text-[12px] mb-[30px]">Enter monthly spendings in each category</div>
-          <div className='mb-[40px]'>
+          <div className='mb-[40px] w-[100%]'>
             {label.map((item, index) => (
-              <div className="flex flex-row justify-between pr-[50px] py-[20px] pl-[20px] ">
-                <div className='flex flex-col items-start  relative'>
+              <div className="flex flex-row justify-between pr-[50px] py-[20px] w-[100%] ">
+                <div className='flex flex-col items-start  relative w-[65%]'>
                   <h1 className="font-medium text-[16px] relative top-[-8px]">{item}</h1>
-                  <div className="flex items-center justify-center ">
+                  <div className="flex items-center justify-center w-[90%] ">
                     <ProgressBar progress={progressValue} color={colorList[index]} />
                   </div>
 
                 </div>
-                <div>
+                <div className='w-[35%]'>
                   <input
                     type="number"
                     placeholder="₹ 0.00"
                     value={data[index]}
-                    class={`p-2 w-[120px] hover:border-[1px] hover:border-[gray] rounded-md`}
+                    class={`px-2 py-1 w-[100px] hover:border-[1px] hover:border-[gray] rounded-md`}
                     style={{ borderColor: colorList[index], borderWidth: '1px', borderStyle: 'solid' }}
                     onChange={(e) => handleUpdateCategory(index, parseInt(e.target.value))}
                   />
@@ -75,17 +94,20 @@ const predict = () => {
 
           </div>
           <div className='flex justify-between'>
-            <div className="border border-[#2EADE2] py-1 px-4 flex items-center cursor-pointer text-[#003865] font-medium rounded-md text-[14px]">
+            <div className="border border-[#2EADE2] py-1 px-4 flex items-center cursor-pointer text-[#003865] font-medium rounded-md text-[14px]" onClick={openModal}>
               <span className="text-[#2EADE2] mr-2 text-[20px] font-bold">+</span>
               Add New Category
             </div>
           </div>
         </div>
-        <div className='w-[50%] flex justify-center items-center'>
-          <div className='w-[60%]'>  <Pie label={label} color={colorList} pieData={data} /></div>
+        <div className='w-[50%] flex flex-col  items-center '>
+        <div className="font-medium text-[18px] mb-[50px]">Expense Distribution</div>
+          <div className='w-[80%]'>  <Pie label={label} color={colorList} pieData={data} /></div>
 
         </div>
+        <Modal isOpen={isModalOpen} closeModal={closeModal} onAddCategory={handleAddCategory}/>
       </div>
+     
     </div>
   );
 };

@@ -24,7 +24,7 @@ const Navlinks = ({ link, text, logo }) => {
       onClick={onClickHandler}
     >
       <img className="h-[22px]" src={`/assets/images/${logo}`} alt="navicon" />
-      <div>{text}</div>
+      <div className="text-[14px]">{text}</div>
     </div>
   );
 };

@@ -2,8 +2,8 @@ import Navlinks from "./navlinks";
 
 const Navbar = () => {
   return (
-    <div className="min-w-[20%] w-[20%] border-r-[1.9px] border-[#D9D9D9] bg-[white] h-[100vh] flex flex-col px-[21px] py-[20px] box-border font-Inter">
-      <div className="flex flex-col gap-y-[0px] justify-center box-border">
+    <div className="min-w-[290px] w-[290px] border-r-[1.9px] border-[#D9D9D9] bg-[white] h-[100vh] flex flex-col px-[21px] py-[20px] box-border font-Inter">
+      <div className="flex flex-col gap-y-[0px] justify-center box-border mb-[10px]">
         <div className="flex flex-row gap-x-[5px] px-[30px] text-[26px] items-center font-medium font-Lexend mb-3">
           <img
             className="h-[22px]"

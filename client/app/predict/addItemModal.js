@@ -25,32 +25,32 @@ const Modal = ({ isOpen, closeModal,onAddCategory }) => {
         </span>
         <h2 className="text-2xl mb-4">Add Item</h2>
         <label htmlFor="itemName" className="block mb-2 text-sm font-semibold">
-          Item Name:
+          Category:
         </label>
         <input
           type="text"
           id="itemName"
           value={itemName}
           onChange={(e) => setItemName(e.target.value)}
-          placeholder="Enter the item name"
+          placeholder="Enter the Category name"
           className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:border-blue-500"
         />
         <label htmlFor="itemPrice" className="block mb-2 text-sm font-semibold">
-          Item Price:
+          Category expence:
         </label>
         <input
           type="number"
           id="itemPrice"
           value={itemPrice}
           onChange={(e) => setItemPrice(e.target.value)}
-          placeholder="Enter the item price"
+          placeholder="Enter the expence"
           className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none focus:ring focus:border-blue-500"
         />
         <button
           onClick={handleAddItem}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-all duration-300"
         >
-          Add Item
+          Add Category
         </button>
       </div>
     </div>

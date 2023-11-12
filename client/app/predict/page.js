@@ -48,10 +48,11 @@ const predict = () => {
   };
 
   const handleAddCategory = (category, expence) => {
-    setCount(count+1);
+    
     setLabel([...label, category])
     setData([...data, parseInt(expence)]);
-    setColorList([...colorList,pieChartColors[count]])
+    setColorList([...colorList,pieChartColors[count+1]])
+    setCount(count+1);
     closeModal();
   };
 

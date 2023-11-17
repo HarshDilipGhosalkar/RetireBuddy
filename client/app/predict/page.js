@@ -9,18 +9,21 @@ import Modal from './addItemModal';
 
 
 const predict = () => {
-  const progressValue = 75;
-  const [count, setCount] = useState(4);
-  const [label, setLabel] = useState(['Grocery', 'Electricity bill', 'Gas bill', 'House maintainence', 'Medications']);
-  const [colorList, setColorList] = useState(['#4C7CFF', '#FF6B6B', '#63B3ED', '#FFD166', '#A0D468']);
-  // const [predictionList, setPredictionList] = useState([
-  //   { id: 0, content: 'Grocery', bgColor: '#4C7CFF' }, // Red with Black border
-  //   { id: 1, content: 'Electricity bill', bgColor: '#FF6B6B' }, // Blue with Black border
-  //   { id: 2, content: 'Gas bill', bgColor: '#63B3ED'}, // Green with Black border
-  //   { id: 3, content: 'House maintainence', bgColor: '#FFD166' }, // Yellow with Black border
-  //   { id: 4, content: 'Medications', bgColor: '#A0D468'}, // Purple with Black border
-  // ]);
-  const [data, setData] = useState([5000, 2000, 1700, 500, 200]);
+
+  const totalExpence=8200;
+  const [count, setCount] = useState(3);
+  const [label, setLabel] = useState(['Grocery', 'Electricity bill', 'Gas bill', 'House maintainence']);
+  // const [colorList, setColorList] = useState(['#4C7CFF', '#FF6B6B', '#63B3ED', '#FFD166']);
+
+  const [predictionList, setPredictionList] = useState([
+    {  content: 'Grocery',expence:5000  }, 
+    {  content: 'Electricity bill',expence:2000 }, 
+    {  content: 'Gas bill',expence:1700 }, 
+    {  content: 'House maintainence',expence:500 }, 
+  ]);
+
+  const [data, setData] = useState([5000, 2000, 1700, 500]);
+
   const pieChartColors = [
     '#4C7CFF', '#FF6B6B', '#63B3ED', '#FFD166', '#A0D468',
     '#ED5565', '#48CFAD', '#AC92EB', '#FFCE54', '#6A6A6A',
@@ -48,10 +51,15 @@ const predict = () => {
   };
 
   const handleAddCategory = (category, expence) => {
-    
+    const newItem=    { 
+      id: count+1, 
+      content: category, 
+      expence: expence } 
+
     setLabel([...label, category])
     setData([...data, parseInt(expence)]);
-    setColorList([...colorList,pieChartColors[count+1]])
+    // setColorList([...colorList,pieChartColors[count+1]])
+    setPredictionList([...predictionList,newItem])
     setCount(count+1);
     closeModal();
   };
@@ -72,7 +80,7 @@ const predict = () => {
                 <div className='flex flex-col items-start  relative w-[65%]'>
                   <h1 className="font-medium text-[16px] relative top-[-8px]">{item}</h1>
                   <div className="flex items-center justify-center w-[90%] ">
-                    <ProgressBar progress={progressValue} color={colorList[index]} />
+                    <ProgressBar progress={(data[index]/totalExpence)*100} color={pieChartColors[index]} />
                   </div>
 
                 </div>
@@ -82,7 +90,7 @@ const predict = () => {
                     placeholder="₹ 0.00"
                     value={data[index]}
                     class={`px-2 py-1 w-[100px] hover:border-[1px] hover:border-[gray] rounded-md`}
-                    style={{ borderColor: colorList[index], borderWidth: '1px', borderStyle: 'solid' }}
+                    style={{ borderColor: pieChartColors[index], borderWidth: '1px', borderStyle: 'solid' }}
                     onChange={(e) => handleUpdateCategory(index, parseInt(e.target.value))}
                   />
                   <span className="ml-2">
@@ -103,7 +111,7 @@ const predict = () => {
         </div>
         <div className='w-[50%] flex flex-col  items-center '>
         <div className="font-medium text-[18px] mb-[50px]">Expense Distribution</div>
-          <div className='w-[80%]'>  <Pie label={label} color={colorList} pieData={data} /></div>
+          <div className='w-[80%]'>  <Pie label={label} color={pieChartColors.slice(0,count+1)} pieData={data} /></div>
 
         </div>
         <Modal isOpen={isModalOpen} closeModal={closeModal} onAddCategory={handleAddCategory}/>

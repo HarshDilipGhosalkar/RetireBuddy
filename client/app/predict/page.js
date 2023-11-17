@@ -10,16 +10,16 @@ import Modal from './addItemModal';
 
 const predict = () => {
 
-  const totalExpence=8200;
+  const [totalExpence, setTotalExpence] = useState(9200);
   const [count, setCount] = useState(3);
   const [label, setLabel] = useState(['Grocery', 'Electricity bill', 'Gas bill', 'House maintainence']);
   // const [colorList, setColorList] = useState(['#4C7CFF', '#FF6B6B', '#63B3ED', '#FFD166']);
 
   const [predictionList, setPredictionList] = useState([
-    {  content: 'Grocery',expence:5000  }, 
-    {  content: 'Electricity bill',expence:2000 }, 
-    {  content: 'Gas bill',expence:1700 }, 
-    {  content: 'House maintainence',expence:500 }, 
+    { content: 'Grocery', expence: 5000 },
+    { content: 'Electricity bill', expence: 2000 },
+    { content: 'Gas bill', expence: 1700 },
+    { content: 'House maintainence', expence: 500 },
   ]);
 
   const [data, setData] = useState([5000, 2000, 1700, 500]);
@@ -30,43 +30,75 @@ const predict = () => {
     '#EC87C0', '#5DB2FF', '#FFD700', '#9F9F9F', '#37BC9B',
     '#967ADC', '#FF7857', '#5E5E5E', '#DA4453', '#80D3E6',
   ];
-  
+
   const [isModalOpen, setModalOpen] = useState(false);
 
   const openModal = () => {
     setModalOpen(true);
   };
-  
+
 
   const closeModal = () => {
     setModalOpen(false);
   };
 
   const handleUpdateCategory = (index, newVal) => {
-    const newData = [...data];
+    // console.log(index,newVal);
+    // const newData = [...data];
 
-    newData[index] = newVal;
+    //   newData[index] = parseInt(newVal);
+    //   setData(newData);
+    //   setTotalExpence(totalExpence - data[index] + parseInt(newVal))
+    if (isNaN(newVal)) {
+      const newData = [...data];
+      newData[index] = 0;
+      setData(newData);
+      setTotalExpence(totalExpence - data[index])
+      console.log("yes its nana")
+    } else {
+      const newData = [...data];
 
-    setData(newData);
+      newData[index] = parseInt(newVal);
+      setData(newData);
+      setTotalExpence(totalExpence - data[index] + parseInt(newVal))
+    }
+   
+
+
   };
 
   const handleAddCategory = (category, expence) => {
-    const newItem=    { 
-      id: count+1, 
-      content: category, 
-      expence: expence } 
+    const newItem = {
+      id: count + 1,
+      content: category,
+      expence: parseInt(expence)
+    }
 
+    setTotalExpence(totalExpence + parseInt(expence));
     setLabel([...label, category])
     setData([...data, parseInt(expence)]);
     // setColorList([...colorList,pieChartColors[count+1]])
-    setPredictionList([...predictionList,newItem])
-    setCount(count+1);
+    setPredictionList([...predictionList, newItem])
+
+    setCount(count + 1);
+
     closeModal();
   };
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+
+  const handleRemoveElement = (index) => {
+    const newData = data.filter(element => element !== data[parseInt(index)]);
+    const newLabel = label.filter(element => element !== label[parseInt(index)]);
+    const newList = predictionList.filter((_, index) => index !== parseInt(index));
+    setTotalExpence(totalExpence - data[index])
+    setData(newData);
+    setLabel(newLabel);
+    setPredictionList(newList)
+  };
+
+  // useEffect(() => {
+  //   console.log(totalExpence);
+  // }, [data]);
 
   return (
     <div className="p-[30px]">
@@ -80,7 +112,7 @@ const predict = () => {
                 <div className='flex flex-col items-start  relative w-[65%]'>
                   <h1 className="font-medium text-[16px] relative top-[-8px]">{item}</h1>
                   <div className="flex items-center justify-center w-[90%] ">
-                    <ProgressBar progress={(data[index]/totalExpence)*100} color={pieChartColors[index]} />
+                    <ProgressBar progress={(data[index] / totalExpence) * 100} color={pieChartColors[index]} />
                   </div>
 
                 </div>
@@ -93,9 +125,8 @@ const predict = () => {
                     style={{ borderColor: pieChartColors[index], borderWidth: '1px', borderStyle: 'solid' }}
                     onChange={(e) => handleUpdateCategory(index, parseInt(e.target.value))}
                   />
-                  <span className="ml-2">
-                    <FontAwesomeIcon icon={faTrash} className="text-[gray]" />
-
+                  <span className="ml-2 cursor-pointer">
+                    <FontAwesomeIcon icon={faTrash} className="text-[gray]" onClick={() => handleRemoveElement(index)} />
                   </span>
                 </div>
               </div>
@@ -109,14 +140,17 @@ const predict = () => {
             </div>
           </div>
         </div>
-        <div className='w-[50%] flex flex-col  items-center '>
-        <div className="font-medium text-[18px] mb-[50px]">Expense Distribution</div>
-          <div className='w-[80%]'>  <Pie label={label} color={pieChartColors.slice(0,count+1)} pieData={data} /></div>
-
+        <div className='w-[50%] flex flex-col  items-center relative text-center'>
+          <div className="font-medium text-[18px] mb-[50px]">Expense Distribution</div>
+          <div className='w-[80%]'>  <Pie label={label} color={pieChartColors.slice(0, count + 1)} pieData={data} /></div>
+          <div className=' absolute top-[57%]'>
+            <div>Total montly expenses</div>
+            <div className='font-bold text-[16px]'>₹  {totalExpence}</div>
+          </div>
         </div>
-        <Modal isOpen={isModalOpen} closeModal={closeModal} onAddCategory={handleAddCategory}/>
+        <Modal isOpen={isModalOpen} closeModal={closeModal} onAddCategory={handleAddCategory} />
       </div>
-     
+
     </div>
   );
 };

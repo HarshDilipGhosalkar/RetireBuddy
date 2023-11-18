@@ -1,7 +1,7 @@
 
 "use client"
 import React, { useState, useEffect } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Pie } from '@/app/predict/pie';
 import { ProgressBar } from './progress';
@@ -126,7 +126,7 @@ const predict = () => {
                     onChange={(e) => handleUpdateCategory(index, parseInt(e.target.value))}
                   />
                   <span className="ml-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faTrash} className="text-[gray]" onClick={() => handleRemoveElement(index)} />
+                    {/* <FontAwesomeIcon icon={faTrash} className="text-[gray]" onClick={() => handleRemoveElement(index)} /> */}
                   </span>
                 </div>
               </div>

@@ -87,13 +87,14 @@ const predict = () => {
 
 
   const handleRemoveElement = (index) => {
+    setTotalExpence(totalExpence - data[index])
     const newData = data.filter(element => element !== data[parseInt(index)]);
     const newLabel = label.filter(element => element !== label[parseInt(index)]);
     const newList = predictionList.filter((_, index) => index !== parseInt(index));
-    setTotalExpence(totalExpence - data[index])
     setData(newData);
     setLabel(newLabel);
     setPredictionList(newList)
+    setCount(count-1);
   };
 
   // useEffect(() => {

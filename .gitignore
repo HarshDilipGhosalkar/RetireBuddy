@@ -1,0 +1,4 @@
+/backend/scripts
+/backend/.env
+/backend/chromaDB/medicalDataDB/chroma.sqlite3
+hospital_urls.txt

@@ -7,7 +7,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 export function Pie({label,color,pieData}) {
-    console.log(color);
     const data = {
         labels: label,
         datasets: [

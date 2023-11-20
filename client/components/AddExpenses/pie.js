@@ -7,7 +7,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 
 export function Pie({label,color,pieData}) {
-    console.log(color);
     const data = {
         labels: label,
         datasets: [
@@ -15,8 +14,7 @@ export function Pie({label,color,pieData}) {
             label: '# of Votes',
             data: pieData,
             backgroundColor: color,
-            borderColor: color,
-            borderWidth: 1,
+            
           },
         ],
       };

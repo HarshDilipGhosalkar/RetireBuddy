@@ -1,227 +1,249 @@
-"use client";
-import { useState } from "react";
-const RetirementPlanning = () => {
-  const [healthData, setHealthData] = useState([]);
-  const [attached, setAttached] = useState([]);
+"use client"
+import React, { useState } from 'react';
 
-  const handleInputChange = (index, fieldName, value) => {
-    setHealthData((prevHealthData) => {
-      const updatedHealthData = [...prevHealthData];
-      updatedHealthData[index][fieldName] = value;
-      return updatedHealthData;
-    });
-  };
+const YourComponent = () => {
+    const [expense, setExpense] = useState('');
+    const [startPension, setStartPension] = useState('');
+    const [investmentAmount, setInvestmentAmount] = useState('');
+    const [expenseGrowth, setExpenseGrowth] = useState('');
+    const [step, setStep] = useState(1);
 
-  const handleFileChange = (index, event) => {
-    const selectedFile = event.target.files[0];
+    const handleOptionClick = (value, setStateFunction) => {
+        setStateFunction(value);
+    };
+    
+    const handlePlanButtonClick = () => {
 
-    setHealthData((prevHealthData) => {
-      const updatedHealthData = [...prevHealthData];
-      const existingFiles = updatedHealthData[index].attachedFile || [];
+        console.log('Show Plans button clicked!');
+    };
 
-      // Check if the selected file is already in the list using a reference comparison
-      const isDuplicate = existingFiles.some((file) => file === selectedFile);
+    const plans = [
+        {
+            id: 1,
+            imageSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/HDFC_Life_Logo.svg/1200px-HDFC_Life_Logo.svg.png', // Replace with your actual image source URL
+            years: 15,
+            percentage: 8,
+            monthlyPension: 7500,
+        },
+        {
+            id: 2,
+            imageSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/HDFC_Life_Logo.svg/1200px-HDFC_Life_Logo.svg.png', // Replace with your actual image source URL
+            years: 20,
+            percentage: 7,
+            monthlyPension: 8000,
+        },
+        {
+            id: 3,
+            imageSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/HDFC_Life_Logo.svg/1200px-HDFC_Life_Logo.svg.png', // Replace with your actual image source URL
+            years: 18,
+            percentage: 9,
+            monthlyPension: 8500,
+        },
+    ];
 
-      if (!isDuplicate) {
-        updatedHealthData[index].attachedFile = [
-          ...existingFiles,
-          selectedFile,
-        ];
-      }
 
-      return updatedHealthData;
-    });
-  };
+    return (
+        <div className="flex h-[100%] justify-center  w-[100%] ">
 
-  const handleFileDelete = (healthDataIndex, attachedIndex) => {
-    setHealthData((prevHealthData) => {
-      const updatedHealthData = [...prevHealthData];
-      updatedHealthData[healthDataIndex].attachedFile.splice(attachedIndex, 1);
-      return updatedHealthData;
-    });
-  };
-  const handleDeleteHealthData = (index) => {
-    setHealthData((prevHealthData) => {
-      const updatedHealthData = [...prevHealthData];
-      updatedHealthData.splice(index, 1);
-      return updatedHealthData;
-    });
-  };
+            <div className="w-[35%] p-8 border-r border-gray-300">
+                <h2 className="text-2xl font-bold mb-6 text-[#6A4FF7]">Calculator</h2>
 
-  return (
-    <section>
-      <div className="p-4">
-        <div className="ml-4 mb-4">
-          <h1 className="text-2xl font-medium">Health Details</h1>
-          <p className="mt-[5px] text-[14px]">
-            Enter any current / past health issues
-          </p>
-        </div>
-        {healthData.length ? (
-          <>
-            {healthData.map((item, healthDataIndex) => {
-              console.log(item);
-              return (
-                <div className="border-[1.5px] border-[#d9d9d9] w-full py-[10px] px-[20px]">
-                  <div className="flex justify-between">
-                    <div className="flex gap-x-8">
-                      <div>
-                        <p className="font-inter text-[#57534E] mb-[5px] font-medium text-[14px]">
-                          Disease name / Symptoms:
-                        </p>
-                        <input
-                          className="px-4 border-[1.5px] w-[200px] border-[#D9D9D9] rounded-md py-[5px]"
-                          placeholder="Diseases name"
-                          value={item.diseaseName}
-                          onChange={(e) =>
-                            handleInputChange(
-                              healthDataIndex,
-                              "diseaseName",
-                              e.target.value
-                            )
-                          }
-                        ></input>
-                      </div>
-                      <div>
-                        <p className="font-inter text-[#57534E] mb-[5px] font-medium text-[14px]">
-                          Experiencing from:
-                        </p>
-                        <input
-                          className="px-4 border-[1.5px] text-[#9ca3af] w-[160px] border-[#D9D9D9] rounded-md py-[5px]"
-                          type="date"
-                          value={item.date}
-                          onChange={(e) =>
-                            handleInputChange(
-                              healthDataIndex,
-                              "date",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="h-[60px]">
-                        <p className="font-inter text-[#57534E] mb-[5px] font-medium text-[14px]">
-                          Report/Doctor's Findings:
-                        </p>
-                        <div className="px-4 border-[1.5px] w-[180px] border-[#D9D9D9] rounded-md py-[5px]">
-                          <p className="text-[#9ca3af] flex justify-center align-center items-center gap-x-2">
-                            <img
-                              className="w-4"
-                              src="/assets/icons/upload.svg"
-                              alt="upload"
-                            />
-                            Upload File
-                          </p>
-                        </div>
-                        <input
-                          className="px-4 opacity-0 relative top-[-38px] border-[1.5px] w-[180px] border-[#000] rounded-md py-[2px]"
-                          type="file"
-                          onChange={(e) => handleFileChange(healthDataIndex, e)}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-inter text-[#57534E] mb-[5px] font-medium text-[14px]">
-                          Additional information:
-                        </p>
-                        <input
-                          className="px-4 border-[1.5px] w-[200px] border-[#D9D9D9] rounded-md py-[5px]"
-                          placeholder="Additional information"
-                          value={item.additionalInformation}
-                          onChange={(e) =>
-                            handleInputChange(
-                              healthDataIndex,
-                              "additionalInformation",
-                              e.target.value
-                            )
-                          }
-                        />
-                      </div>
+                <div className="mb-6">
+                    <label className="block text-sm font-semibold text-gray-700">What's your current monthly expense?</label>
+                    <input
+                        type="number"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                        placeholder="Enter your expense"
+                        value={expense}
+                        onChange={(e) => setExpense(e.target.value)}
+                    />
+
+                    <div className="flex mt-2">
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(50000, setExpense)}
+                        >
+                            50,000
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(60000, setExpense)}
+                        >
+                            60,000
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md"
+                            onClick={() => handleOptionClick(70000, setExpense)}
+                        >
+                            70,000
+                        </button>
                     </div>
-                    <div className="min-h-full flex items-end py-2">
-                      <img
-                        className="w-6 cursor-pointer"
-                        src="/assets/icons/delete.svg"
-                        alt="delete"
-                        onClick={() => handleDeleteHealthData(healthDataIndex)}
-                      />
-                    </div>
-                  </div>
-                  <div className="mt-4">
-                    <p className="text-[#7D7C81]">
-                      Attached:{" "}
-                      <em>(click on upload button to attach files)</em>
-                    </p>
-                    <div className="mt-2 text-[#57534E] mb-[5px] font-normal text-[15px] ">
-                      {item.attachedFile.length ? (
-                        <div>
-                          {item.attachedFile.map((file, id) => {
-                            console.log("Heoo");
-                            return (
-                              <div
-                                className="flex w-[500px] items-center justify-between"
-                                key={id}
-                              >
-                                <p className="flex mt-[3px] items-center font-inter text-[#57534E] mb-[5px] font-medium text-[14px]">
-                                  <span className="mr-2">{id + 1}.</span>
-                                  <span className="truncate w-[340px] inline-block">
-                                    {file.name}
-                                  </span>
-                                </p>
-                                <div className="flex gap-x-8 items-center">
-                                  <p className="flex font-medium text-[#9ca3af]">
-                                    View
-                                    <img
-                                      className="w-4 mb-[4px] ml-2"
-                                      src="/assets/icons/view.svg"
-                                      alt="view"
-                                    />
-                                  </p>
-                                  <img
-                                    className="w-5 cursor-pointer"
-                                    src="/assets/icons/delete.svg"
-                                    alt="delete"
-                                    onClick={() =>
-                                      handleFileDelete(healthDataIndex, id)
-                                    }
-                                  />
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <p className="">No files attached</p>
-                      )}
-                    </div>
-                  </div>
                 </div>
-              );
-            })}
-          </>
-        ) : (
-          <p>
-            <em>Click Add More button to create new record </em>
-          </p>
-        )}
 
-        <button
-          className="flex items-center gap-x-3 mt-8 justify-center text-[#003865] font-medium text-[14px] font-inter border-[1.5px] w-[145px] py-1.5 rounded-lg border-[#2EADE2]"
-          onClick={() => {
-            setHealthData((prevData) => [
-              ...prevData,
-              {
-                diseaseName: "",
-                date: "",
-                attachedFile: [],
-                additionalInformation: "",
-              },
-            ]);
-          }}
-        >
-          <img className="w-5" src="/assets/icons/add.svg"></img> add more
-        </button>
-      </div>
-    </section>
-  );
+                <div className="mb-6">
+                    <label className="block text-sm font-semibold text-gray-700">Start pension from?</label>
+                    <input
+                        type="number"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                        placeholder="Enter start date"
+                        value={startPension}
+                        onChange={(e) => setStartPension(e.target.value)}
+                    />
+
+                    <div className="flex mt-2">
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(60, setStartPension)}
+                        >
+                            60 yrs
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(70, setStartPension)}
+                        >
+                            70 yrs
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md"
+                            onClick={() => handleOptionClick(80, setStartPension)}
+                        >
+                            80 yrs
+                        </button>
+                    </div>
+                </div>
+
+                <div className="mb-6">
+                    <label className="block text-sm font-semibold text-gray-700">Investment amount per month?</label>
+                    <input
+                        type="number"
+                        className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+                        placeholder="Enter investment amount"
+                        value={investmentAmount}
+                        onChange={(e) => setInvestmentAmount(e.target.value)}
+                    />
+
+                    <div className="flex mt-2">
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(5000, setInvestmentAmount)}
+                        >
+                            5,000
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(10000, setInvestmentAmount)}
+                        >
+                            10,000
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md"
+                            onClick={() => handleOptionClick(15000, setInvestmentAmount)}
+                        >
+                            15,000
+                        </button>
+                    </div>
+                </div>
+
+                <div className="mb-6">
+                    <label className="block text-sm font-semibold text-gray-700">
+                        Your expense can go up by?{' '}
+                        <span className="border border-dotted border-[#6A4FF7] px-2 py-1 rounded-md">
+                            <input
+                                type="number"
+                                className="border-none outline-none w-12 text-right "
+                                placeholder="%"
+                                value={expenseGrowth}
+                                onChange={(e) => setExpenseGrowth(e.target.value)}
+                            />
+                        </span>
+                    </label>
+
+                    <div className="flex mt-2">
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(5, setExpenseGrowth)}
+                        >
+                            5%
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md mr-2"
+                            onClick={() => handleOptionClick(7, setExpenseGrowth)}
+                        >
+                            7%
+                        </button>
+                        <button
+                            className="border border-[#6A4FF7] px-2 py-1 rounded-md"
+                            onClick={() => handleOptionClick(10, setExpenseGrowth)}
+                        >
+                            10%
+                        </button>
+                    </div>
+                </div>
+
+                <button
+                    className="bg-[#6A4FF7] text-white py-2 px-8 rounded-md  w-full"
+                    onClick={()=>setStep(2)}
+                >
+                    Show Plans
+                </button>
+            </div>
+
+            {step == 1 ? (
+                <div className="w-[65%]  bg-[#f2f7ff] flex justify-center items-center">
+                <div>Please fill in beside form</div>
+            </div>
+        
+      ) : step == 2 ? (
+        <div className="w-[65%] p-8 bg-[#f2f7ff] h-screen">
+        <div className="w-[100%] rounded-[20px]">
+            {/* Plan divs */}
+            <div className="flex flex-wrap rounded-[20px]">
+                {plans.map((plan) => (
+                    <div key={plan.id} className="bg-white p-4 shadow-md mb-4 flex items-center relative w-full rounded-[10px]">
+                        {/* Section 1: Plan image */}
+                        <img src={plan.imageSrc} alt={`Plan ${plan.id}`} className="w-25 h-20 object-cover mr-4 rounded" />
+                        <div className="w-[1px] h-full bg-[#e6e9ed]"></div>
+                        {/* Section 2: Years return and percentage */}
+                        <div className="flex-grow text-center">
+                            <p className="text-md font-semibold text-[gray]">{plan.years} years return</p>
+                            <p className="text-lg font-semibold text-gray-700">{plan.percentage}%</p>
+                        </div>
+
+                        {/* Section 3: Tax-free div with pension tag */}
+                        <div className="w-[1px] h-full bg-[#e6e9ed]"></div>
+                        <div className="flex flex-col flex-grow text-center items-center justify-center mt-5">
+                            <div className='flex'>
+                                <div className="border w-[54px] h-[20px] text-[12px] border-green-500 text-green-500  rounded-md mx-4">
+                                    Tax-Free
+                                    <br />
+
+                                </div>
+                                <span className="text-md text-gray-700">Pension</span>
+                            </div>
+
+
+                            <p className="text-md text-center mb-4">₹{plan.monthlyPension}</p>
+
+                        </div>
+
+                        {/* Section 4: Monthly pension with rupee symbol and Get Details button */}
+                        <div className="flex flex-col items-center px-2">
+                            <button className="text-white bg-[#6A4FF7] p-2 rounded  text-sm">
+                                Get Details {'>'}
+                            </button>
+                        </div>
+
+                        {/* Vertical bar to separate each section */}
+
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+      ) : null}
+            
+        </div>
+    );
 };
-export default RetirementPlanning;
+
+export default YourComponent;

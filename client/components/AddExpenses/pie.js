@@ -14,8 +14,7 @@ export function Pie({label,color,pieData}) {
             label: '# of Votes',
             data: pieData,
             backgroundColor: color,
-            borderColor: color,
-            borderWidth: 1,
+            
           },
         ],
       };

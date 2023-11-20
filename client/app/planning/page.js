@@ -6,11 +6,12 @@ const YourComponent = () => {
     const [startPension, setStartPension] = useState('');
     const [investmentAmount, setInvestmentAmount] = useState('');
     const [expenseGrowth, setExpenseGrowth] = useState('');
+    const [step, setStep] = useState(1);
 
     const handleOptionClick = (value, setStateFunction) => {
         setStateFunction(value);
     };
-
+    
     const handlePlanButtonClick = () => {
 
         console.log('Show Plans button clicked!');
@@ -181,59 +182,66 @@ const YourComponent = () => {
 
                 <button
                     className="bg-[#6A4FF7] text-white py-2 px-8 rounded-md  w-full"
-                    onClick={handlePlanButtonClick}
+                    onClick={()=>setStep(2)}
                 >
                     Show Plans
                 </button>
             </div>
 
-
-            <div className="w-[65%] p-8 bg-[#f2f7ff] h-screen">
-                <div className="w-[100%] rounded-[20px]">
-                    {/* Plan divs */}
-                    <div className="flex flex-wrap rounded-[20px]">
-                        {plans.map((plan) => (
-                            <div key={plan.id} className="bg-white p-4 shadow-md mb-4 flex items-center relative w-full rounded-[10px]">
-                                {/* Section 1: Plan image */}
-                                <img src={plan.imageSrc} alt={`Plan ${plan.id}`} className="w-25 h-20 object-cover mr-4 rounded" />
-                                <div className="w-[1px] h-full bg-[#e6e9ed]"></div>
-                                {/* Section 2: Years return and percentage */}
-                                <div className="flex-grow text-center">
-                                    <p className="text-md font-semibold text-[gray]">{plan.years} years return</p>
-                                    <p className="text-lg font-semibold text-gray-700">{plan.percentage}%</p>
-                                </div>
-
-                                {/* Section 3: Tax-free div with pension tag */}
-                                <div className="w-[1px] h-full bg-[#e6e9ed]"></div>
-                                <div className="flex flex-col flex-grow text-center items-center justify-center mt-5">
-                                    <div className='flex'>
-                                        <div className="border w-[54px] h-[20px] text-[12px] border-green-500 text-green-500  rounded-md mx-4">
-                                            Tax-Free
-                                            <br />
-
-                                        </div>
-                                        <span className="text-md text-gray-700">Pension</span>
-                                    </div>
-
-
-                                    <p className="text-md text-center mb-4">₹{plan.monthlyPension}</p>
-
-                                </div>
-
-                                {/* Section 4: Monthly pension with rupee symbol and Get Details button */}
-                                <div className="flex flex-col items-center px-2">
-                                    <button className="text-white bg-[#6A4FF7] p-2 rounded  text-sm">
-                                        Get Details {'>'}
-                                    </button>
-                                </div>
-
-                                {/* Vertical bar to separate each section */}
-
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            {step == 1 ? (
+                <div className="w-[65%]  bg-[#f2f7ff] flex justify-center items-center">
+                <div>Please fill in beside form</div>
             </div>
+        
+      ) : step == 2 ? (
+        <div className="w-[65%] p-8 bg-[#f2f7ff] h-screen">
+        <div className="w-[100%] rounded-[20px]">
+            {/* Plan divs */}
+            <div className="flex flex-wrap rounded-[20px]">
+                {plans.map((plan) => (
+                    <div key={plan.id} className="bg-white p-4 shadow-md mb-4 flex items-center relative w-full rounded-[10px]">
+                        {/* Section 1: Plan image */}
+                        <img src={plan.imageSrc} alt={`Plan ${plan.id}`} className="w-25 h-20 object-cover mr-4 rounded" />
+                        <div className="w-[1px] h-full bg-[#e6e9ed]"></div>
+                        {/* Section 2: Years return and percentage */}
+                        <div className="flex-grow text-center">
+                            <p className="text-md font-semibold text-[gray]">{plan.years} years return</p>
+                            <p className="text-lg font-semibold text-gray-700">{plan.percentage}%</p>
+                        </div>
+
+                        {/* Section 3: Tax-free div with pension tag */}
+                        <div className="w-[1px] h-full bg-[#e6e9ed]"></div>
+                        <div className="flex flex-col flex-grow text-center items-center justify-center mt-5">
+                            <div className='flex'>
+                                <div className="border w-[54px] h-[20px] text-[12px] border-green-500 text-green-500  rounded-md mx-4">
+                                    Tax-Free
+                                    <br />
+
+                                </div>
+                                <span className="text-md text-gray-700">Pension</span>
+                            </div>
+
+
+                            <p className="text-md text-center mb-4">₹{plan.monthlyPension}</p>
+
+                        </div>
+
+                        {/* Section 4: Monthly pension with rupee symbol and Get Details button */}
+                        <div className="flex flex-col items-center px-2">
+                            <button className="text-white bg-[#6A4FF7] p-2 rounded  text-sm">
+                                Get Details {'>'}
+                            </button>
+                        </div>
+
+                        {/* Vertical bar to separate each section */}
+
+                    </div>
+                ))}
+            </div>
+        </div>
+    </div>
+      ) : null}
+            
         </div>
     );
 };

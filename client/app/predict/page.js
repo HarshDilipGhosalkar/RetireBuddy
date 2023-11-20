@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import AddExpenses from "@/components/AddExpenses/AddExpenses";
 import AddHealthRecord from "@/components/HealthRecords/HeathRecords";
+import FinalReport from "@/components/FinalReport/FinalReport";
 
 const PredictCorpus = () => {
   const [data, setData] = useState({});
   const [step, setStep] = useState(1);
+  const [isLoading, setisLoading] = useState(false);
 
   const addExpenses = (list, totalExpense) => {
     setData((prevData) => ({
@@ -18,7 +20,7 @@ const PredictCorpus = () => {
     setStep(2);
   };
 
-  const addHealthRecord = (list) => {
+  const addHealthRecord = async (list) => {
     const healthData = [];
     const currentDate = new Date();
 
@@ -44,11 +46,14 @@ const PredictCorpus = () => {
       body: raw,
       redirect: "follow",
     };
-
-    fetch("http://localhost:5000/predictRetirementCorpus", requestOptions)
+    setisLoading(true);
+    await fetch("http://localhost:5000/predictRetirementCorpus", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      .catch((error) => console.log("error", error))
+      .finally(() => {
+        setisLoading(false);
+      });
   };
 
   const sendPostRequest = () => {};
@@ -61,7 +66,9 @@ const PredictCorpus = () => {
         <AddExpenses handleSubmit={addExpenses} />
       ) : step == 2 ? (
         <AddHealthRecord handleSubmit={addHealthRecord} />
-      ) : null}
+      ) : (
+        <>{!isLoading ? <FinalReport list={result} /> : <h1>Loading...</h1>}</>
+      )}
     </>
   );
 };

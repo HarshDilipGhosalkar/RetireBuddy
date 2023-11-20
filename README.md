@@ -11,16 +11,25 @@
 ## Video Demo
 
 
+https://github.com/all-stackers/TIAA/assets/72150555/f1dc611c-5d21-4a51-967b-d3930f74aee0
+
+
+For better quality: [https://www.youtube.com/watch?v=miBDBZ_yZeA](https://www.youtube.com/watch?v=miBDBZ_yZeA)
+
 <!-- Architecture Diagram -->
 ## Architecture Diagram
-![Architecture Diagram](/images/architecture_diagram.png)
+
+![Architecture Diagram](https://github.com/all-stackers/TIAA/assets/72150555/68dd8be9-0e0b-4df9-8e9c-d369ac03da87)
+
+![Architecture Diagram](https://github.com/all-stackers/TIAA/assets/72150555/708523c2-a3e0-4dc3-b77d-78ab7e24d92f)
+
 
 <!-- Tech Stack -->
 ## Tech Stack
 - 💻 **Frontend:** Next.js, Tailwind, Redux.
-- 🌐 **Backend:** Python, Flask, 
+- 🌐 **Backend:** Python, Flask
 - 🛢️ **Database:** MongoDB
-- ⚙️ **AI/ML:** Langchain, llamaIndex, SBERT.net, Chromadb.
+- ⚙️ **AI/ML:** Langchain, SBERT.net, Chromadb, LLMs
 
 <!-- Team Members -->
 ## Team Members

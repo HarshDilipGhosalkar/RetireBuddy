@@ -20,21 +20,21 @@ const YourComponent = () => {
     const plans = [
         {
             id: 1,
-            imageSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/HDFC_Life_Logo.svg/1200px-HDFC_Life_Logo.svg.png', // Replace with your actual image source URL
+            imageSrc: 'https://download.logo.wine/logo/Teachers_Insurance_and_Annuity_Association_of_America/Teachers_Insurance_and_Annuity_Association_of_America-Logo.wine.png', // Replace with your actual image source URL
             years: 15,
             percentage: 8,
             monthlyPension: 7500,
         },
         {
             id: 2,
-            imageSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/HDFC_Life_Logo.svg/1200px-HDFC_Life_Logo.svg.png', // Replace with your actual image source URL
+            imageSrc: 'https://download.logo.wine/logo/Teachers_Insurance_and_Annuity_Association_of_America/Teachers_Insurance_and_Annuity_Association_of_America-Logo.wine.png', // Replace with your actual image source URL
             years: 20,
             percentage: 7,
             monthlyPension: 8000,
         },
         {
             id: 3,
-            imageSrc: 'https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/HDFC_Life_Logo.svg/1200px-HDFC_Life_Logo.svg.png', // Replace with your actual image source URL
+            imageSrc: 'https://download.logo.wine/logo/Teachers_Insurance_and_Annuity_Association_of_America/Teachers_Insurance_and_Annuity_Association_of_America-Logo.wine.png', // Replace with your actual image source URL
             years: 18,
             percentage: 9,
             monthlyPension: 8500,

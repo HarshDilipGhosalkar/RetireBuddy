@@ -31,6 +31,8 @@ class PredictRetirementCorpus(Resource):
         total_corpus = 0
         future_monthly_expense_start = 0
         future_monthly_expense_end = 0
+        total_health_corpus = 0
+        final_corpus = 0
 
         for current_expense in current_expenses:
             category_corpus = 0
@@ -39,6 +41,7 @@ class PredictRetirementCorpus(Resource):
             future_expense["current_expense"] = current_expense["expense"]
             future_expense["inflation_rate"] = most_recent_inflation[current_expense['category']]
             future_expense['future_expense_start'] = current_expense['expense']
+            future_expense['category_total'] = 0
 
             for i in range(args['age'], args['retirement_age']):
                 future_expense['future_expense_start'] = round(future_expense['future_expense_start'] + ((future_expense['future_expense_start'] * most_recent_inflation[current_expense['category']]) / 100), 2)
@@ -49,6 +52,7 @@ class PredictRetirementCorpus(Resource):
             for i in range(args['retirement_age'], args['retirement_age'] + 30):
                 future_expense['future_expense_end'] = round(future_expense['future_expense_end'] + ((future_expense['future_expense_end'] * most_recent_inflation[current_expense['category']]) / 100), 2)
                 category_corpus += round((future_expense['future_expense_end'] * 12), 2)
+                future_expense['category_total'] += category_corpus
             
             future_monthly_expense_end = round(future_monthly_expense_end + future_expense['future_expense_end'], 2)
 
@@ -64,8 +68,12 @@ class PredictRetirementCorpus(Resource):
                 treatment_cost = predict_treatment_cost(disease=disease)
                 future_disease["cost"] = float(treatment_cost.get("cost"))
                 future_disease['inflation_considered_cost'] = future_disease["cost"]
+                future_disease['health_inflation_rate'] = most_recent_inflation['health']
                 for i in range(args['retirement_age'], args['retirement_age'] + 30):
                     future_disease['inflation_considered_cost'] = round(future_disease['inflation_considered_cost'] + ((future_disease['inflation_considered_cost'] * most_recent_inflation['health']) / 100), 2)
+                    total_health_corpus = round(total_health_corpus + future_disease['inflation_considered_cost'], 2)
+        
+        final_corpus = round(total_corpus + total_health_corpus, 2)
 
         data = {
             "current_monthly_expense": args['current_monthly_expense'],
@@ -74,7 +82,9 @@ class PredictRetirementCorpus(Resource):
             "total_corpus": total_corpus,
             "future_expenses": future_expenses,
             "current_health_conditions": args['current_health_conditions'],
-            "future_diseases": future_diseases
+            "future_diseases": future_diseases,
+            "toatl_health_corpus": total_health_corpus,
+            "final_corpus": final_corpus
         }
 
         return {"error": False, "data": data}, 200

@@ -1,6 +1,7 @@
 import os
-
 from dotenv import load_dotenv
+load_dotenv()
+
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
@@ -9,7 +10,6 @@ from mongo_engine import db
 from resources.inflation import Inflation
 from resources.predictRetirementCorpus import PredictRetirementCorpus
 
-load_dotenv()
 
 app = Flask(__name__)
 CORS(app)

@@ -27,7 +27,7 @@ qa = RetrievalQA.from_chain_type(
 )
 
 prompt = """
-  Act as an Health care expert who can perdict the Treatment/surgery cost of the given treatment/surgery name. You should respond with fixed cost, cost in range is not acceptable. In the input you will get surgery name and reason, give weightage to surgery name. If cost is unkown give the current cost you know, Do not give unkown or any other thing strictly. Give cost without any commas. Your reply should be in the form of a JSON object enclosing in double quotes strictly adhering to the following format without any intro or outro.
+  Act as an Health care expert who can perdict the Treatment/surgery cost of the given treatment/surgery name. You should respond with fixed cost, cost in range is not acceptable. In the input you will get surgery name and reason, give weightage to surgery name. If cost is unknown give 0 strictly. Give cost without any commas. Your reply should be in the form of a JSON object enclosing in double quotes strictly adhering to the following format without any intro or outro.
   input:
   {disease}
 
@@ -44,4 +44,5 @@ prompt_template = PromptTemplate(
 
 def predict_treatment_cost(disease):
   response = qa.run(prompt_template.format(disease=disease))
+  print(response)
   return json.loads(response)

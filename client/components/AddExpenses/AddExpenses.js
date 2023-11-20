@@ -117,7 +117,6 @@ const AddExpenses = ({ handleSubmit }) => {
   // useEffect(() => {
   //   console.log(totalExpence);
   // }, [data]);
-  console.log(predictionList);
   return (
     <div className="p-[30px]">
       <div className="  flex justify-between">

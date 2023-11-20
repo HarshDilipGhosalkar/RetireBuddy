@@ -61,7 +61,6 @@ const AddHealthRecord = ({ handleSubmit }) => {
         {healthData.length ? (
           <>
             {healthData.map((item, healthDataIndex) => {
-              console.log(item);
               return (
                 <div className="border-[1.5px] border-[#d9d9d9] w-full py-[10px] px-[20px]">
                   <div className="flex justify-between">
@@ -156,7 +155,6 @@ const AddHealthRecord = ({ handleSubmit }) => {
                       {item.attachedFile.length ? (
                         <div>
                           {item.attachedFile.map((file, id) => {
-                            console.log("Heoo");
                             return (
                               <div
                                 className="flex w-[500px] items-center justify-between"
